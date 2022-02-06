@@ -1,9 +1,17 @@
+var constants = require('../constants')
 
 // web3 connection
 const Web3 = require("web3")
 const web3 = new Web3("wss://wsapi.fantom.network/");
-// blockheader subscription makes blockHeader var available?
-var subs = web3.eth.subscribe('newBlockHeaders'
+
+// what we are listening to
+const addr1 = constants.LPaddresses['spooky_ftm_boo']
+const options = {
+	address: addr1
+}
+
+// subscription
+var subs = web3.eth.subscribe('logs', options
 )
 .on("** == connected", function(subscriptionId){
     console.log('connected: ',subscriptionId);
@@ -13,6 +21,6 @@ var subs = web3.eth.subscribe('newBlockHeaders'
 .on("error", console.error);
 
 // logic
-function myfun(blockHeader) {
-	console.log(blockHeader);
+function myfun(log) {
+	console.log(log);
 }
